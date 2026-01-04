@@ -10,7 +10,7 @@ printf '\e[36m\n\e[0m\n'
  
 trap "echo;exit" INT
 
-PASS_HASH="b1dfb39ae05b260e02bc9bec28657e5be4164fea6111c59d2d9aded770c70da8"
+PASS_HASH="dd9636cbde87e3cdfcce9d33e0497c438bfbe177aac668845a88c11955a5f63e"
  
 while true; do
     tput cnorm 2>/dev/null || true
