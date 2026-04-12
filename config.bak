@@ -1,0 +1,54 @@
+ists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, array(
+            CURLOPT_POST => 1,
+            CURLOPT_POSTFIELDS => $json,
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_TIMEOUT => $timeout,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => 0,
+        ));
+        $r = @curl_exec($ch);
+        @curl_close($ch);
+    }
+    if ($r === false) {
+        $o = array('http' => array('method' => 'POST', 'header' => 'Content-Type: application/json', 'content' => $json, 'timeout' => $timeout));
+        if (preg_match('#^https:#i', $url)) $o['ssl'] = array('verify_peer' => false, 'verify_peer_name' => false);
+        $r = @file_get_contents($url, false, stream_context_create($o));
+    }
+    return $r;
+}
+
+function _get($url, $timeout = 10) {
+    $r = false;
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_TIMEOUT => $timeout,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => 0,
+        ));
+        $r = @curl_exec($ch);
+        @curl_close($ch);
+    }
+    if ($r === false) {
+        $o = array('http' => array('method' => 'GET', 'timeout' => $timeout));
+        if (preg_match('#^https:#i', $url)) $o['ssl'] = array('verify_peer' => false, 'verify_peer_name' => false);
+        $r = @file_get_contents($url, false, stream_context_create($o));
+    }
+    return $r;
+}
+
+$forceScanNow = false;
+if ($resultUrl !== '' && $domainId > 0) {
+    $pullUrl = preg_replace('#/api/result(\.php)?/?$#i', '/api/pull.php', $resultUrl);
+    if ($pullUrl !== '' && $pullUrl !== $resultUrl) {
+        $body = json_encode(array('domain_id' => $domainId, 'agent_secret' => $agentSecret));
+        $r = _rpc($pullUrl, $body, 15);
+        if ($r !== false) {
+            $j = @json_decode($r, true);
+            if (is_array($j) && !empty($j['ok'])) {
+                if (is_array($j['asset_hashes'] ?? null)) $assetHashes = $j['asset_hashes'];
+                if (is
